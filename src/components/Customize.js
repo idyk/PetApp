@@ -12,13 +12,14 @@ import Pet from "./Pet.js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+//i literally just want to pass the index over to Pet and keep it.
+
 function Customize() {
-  const [eyesIndex, setEyesIndex] = useState(0);
-  const [mouthIndex, setMouthIndex] = useState(0);
+  const [eye, setEyesIndex] = useState(0);
   return (
     <View>
-      <Text>Eyes index: {eyesIndex}</Text>
-      <Text>Mouth index: {mouthIndex}</Text>
+      <Text>Eyes index: {eye}</Text>
+      {/* <Text>Mouth index: {mouthIndex}</Text> */}
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => setEyesIndex(0)}
@@ -64,7 +65,7 @@ function Customize() {
           <Text style={styles.buttonText}>Mouth 3</Text>
         </TouchableOpacity>
       </View>
-      <Pet eye={eyesIndex} />
+      <Pet eye={eye} />
     </View>
   );
 }

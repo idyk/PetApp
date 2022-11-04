@@ -10,6 +10,8 @@ import Shop from "./src/components/Shop.js";
 import Customize from "./src/components/Customize.js";
 import Settings from "./src/components/Settings.js";
 
+global.eyesIndex = 1;
+
 function InventoryScreen() {
   return (
     <View>
