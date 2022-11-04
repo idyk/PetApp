@@ -28,10 +28,10 @@ const Buttons = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => Alert.alert("Shower clicked")}
-        style={styles.buttonShower}
+        onPress={() => Alert.alert("Customize clicked")}
+        style={styles.buttonCustomize}
       >
-        <Text style={styles.buttonText}>Shower</Text>
+        <Text style={styles.buttonText}>Customize</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     margin: 1,
   },
 
-  buttonShower: {
+  buttonCustomize: {
     backgroundColor: "#66dfd4",
     elevation: 10,
     borderRadius: 3,
