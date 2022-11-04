@@ -15,10 +15,11 @@ const mouthArray = new Array("Sad", "Angry", "Neutral");
 
 var eyesIndex = 0;
 var mouthIndex = 0;
-
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
-const Pet = () => {
+//Parent of customize?
+
+function Pet({ eye, eyeChanger }) {
   return (
     <View style={styles.container}>
       <View
@@ -40,10 +41,10 @@ const Pet = () => {
       >
         <Image
           style={styles.imageSize}
-          source={require("../assets/eyes" + eyesArray[eyesIndex] + ".png")}
+          source={require("../assets/eyes" + eyesArray[eye] + ".png")}
         />
       </View>
-      <View
+      {/* <View
         style={{
           position: "absolute",
           zIndex: 2,
@@ -53,14 +54,14 @@ const Pet = () => {
           style={styles.imageSize}
           source={require("../assets/mouth" + mouthArray[mouthIndex] + ".png")}
         />
-      </View>
+      </View> */}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "red",
+    marginTop: 150,
     alignItems: "center",
     flex: 1,
     justifyContent: "center",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,27 +8,34 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import Pet from "./Pet.js";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Customize = () => {
+function Customize() {
+  const [eyesIndex, setEyesIndex] = useState(0);
+  const [mouthIndex, setMouthIndex] = useState(0);
   return (
     <View>
+      <Text>Eyes index: {eyesIndex}</Text>
+      <Text>Mouth index: {mouthIndex}</Text>
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => Alert.alert("Eye Style 1")}
+          onPress={() => setEyesIndex(0)}
           style={styles.eyeStylesButton}
         >
           <Text style={styles.buttonText}>Eye 1</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Alert.alert("Eye Style 2")}
+          onPress={() => setEyesIndex(1)}
           style={styles.eyeStylesButton}
         >
           <Text style={styles.buttonText}>Eye 2</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Alert.alert("Eye Style 3")}
+          onPress={() => setEyesIndex(2)}
           style={styles.eyeStylesButton}
         >
           <Text style={styles.buttonText}>Eye 3</Text>
@@ -37,29 +44,30 @@ const Customize = () => {
 
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => Alert.alert("Mouth Style 1")}
+          onPress={() => setMouthIndex(0)}
           style={styles.mouthStylesButton}
         >
           <Text style={styles.buttonText}>Mouth 1</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Alert.alert("Mouth Style 2")}
+          onPress={() => setMouthIndex(1)}
           style={styles.mouthStylesButton}
         >
           <Text style={styles.buttonText}>Mouth 2</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Alert.alert("Mouth Style 3")}
+          onPress={() => setMouthIndex(2)}
           style={styles.mouthStylesButton}
         >
           <Text style={styles.buttonText}>Mouth 3</Text>
         </TouchableOpacity>
       </View>
+      <Pet eye={eyesIndex} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
