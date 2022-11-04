@@ -2,11 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Buttons from "./components/Buttons.js";
 import HUD from "./components/HUD.js";
+import Pet from "./components/Pet.js";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <HUD />
+      <Pet />
       <Buttons />
       <StatusBar style="auto" />
     </View>
