@@ -11,10 +11,7 @@ const HUD = () => {
   return (
     <View style={styles.container}>
       <View style={styles.progressBarOne}>
-        <Text>Prog1</Text>
-      </View>
-      <View style={styles.progressBarTwo}>
-        <Text>Prog2</Text>
+        <Text>Hunger Bar</Text>
       </View>
       <View style={styles.coins}>
         <Text>Coins</Text>
@@ -35,12 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f185",
     flex: 1,
     margin: 5,
-  },
-
-  progressBarTwo: {
-    backgroundColor: "#ec66b1",
-    flex: 1,
-    margin: 5,
+    width: 200,
   },
 
   coins: {

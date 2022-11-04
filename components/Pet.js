@@ -8,11 +8,16 @@ import {
   Alert,
   TouchableOpacity,
   Image,
-  ImageBackground,
 } from "react-native";
 
+const eyesArray = new Array("Sad", "Angry", "Neutral");
+const mouthArray = new Array("Sad", "Angry", "Neutral");
+
+var eyesIndex = 0;
+var mouthIndex = 0;
+
 // Stack all needed pet elements on each other using zIndex.
-// These will be able to be modified by user.
+// You can also pet your crap for money.
 const Pet = () => {
   return (
     <View style={styles.container}>
@@ -35,7 +40,7 @@ const Pet = () => {
       >
         <Image
           style={styles.imageSize}
-          source={require("../assets/eyesSad.png")}
+          source={require("../assets/eyes" + eyesArray[eyesIndex] + ".png")}
         />
       </View>
       <View
@@ -46,7 +51,7 @@ const Pet = () => {
       >
         <Image
           style={styles.imageSize}
-          source={require("../assets/mouthNeutral.png")}
+          source={require("../assets/mouth" + mouthArray[mouthIndex] + ".png")}
         />
       </View>
     </View>

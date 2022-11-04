@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Test = () => {
+const Shop = () => {
   return (
     <View>
-      <Text>Testing nav</Text>
+      <Text>Buy stuff for your crap here!</Text>
     </View>
   );
 };
 
-export default Test;
+export default Shop;
