@@ -82,7 +82,6 @@ function Pet(props) {
   return (
     <TouchableOpacity
       onPress={() => {
-        props.reGet();
         if (getCoins == null) {
           setCoins(1);
         } else {

@@ -83,12 +83,12 @@ function StartScreen({ navigation }) {
     getValueFunction();
   });
 
-  const getValueFunction = () => {
+  const getValueFunction = async () => {
     try {
-      // const awaitSync = await AsyncStorage.getItem("coins");
-      // const value = parseInt(awaitSync);
-      // value ? setCoins(value) : setCoins(0);
-      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+      const awaitSync = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitSync);
+      value ? setCoins(value) : setCoins();
+      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
@@ -102,10 +102,11 @@ function StartScreen({ navigation }) {
     }
   };
 
-  const saveValueFunction = async () => {
-    alert("saving");
-    await AsyncStorage.setItem("coins", getCoins.toString());
-    await AsyncStorage.setItem("food", getFood.toString());
+  const saveValueFunction = async (value) => {
+    let newVal = parseInt(getCoins - value);
+    alert("saving with " + newVal);
+    await AsyncStorage.setItem("coins", newVal.toString());
+    // await AsyncStorage.setItem("food", getFood.toString());
     alert("Data saved!");
   };
 
@@ -148,19 +149,22 @@ function StartScreen({ navigation }) {
         <TouchableOpacity
           style={styles.buttonSettings}
           onPress={() => {
+            let subtractVal = 0;
             alert("food: " + getFood);
             if (getCoins >= 10) {
+              subtractVal = 10;
               // const val = getFood;
               // setFood(getFood + 1);
               // alert("food: " + getFood);
               // setFood(parseInt(getFood) + 1);
-              setCoins(parseInt(getCoins) - 10);
-              alert("coins:" + getCoins);
+              alert(
+                "coins if it would work:" + parseInt(getCoins - subtractVal)
+              );
             } else {
               alert("not enough coins!");
             }
-            saveValueFunction();
-            getValueFunction();
+            saveValueFunction(subtractVal);
+            getValueFunction(subtractVal);
           }}
         >
           <Text>Buy food </Text>
@@ -178,7 +182,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Inventory" component={InventoryScreen} />
-        <Stack.Screen name="Shop" component={ShopScreen} />
+        {/* <Stack.Screen name="Shop" component={ShopScreen} /> */}
         <Stack.Screen name="Customize" component={CustomizeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
