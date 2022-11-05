@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrapFacials } from "./ImageExport.js";
-import HUD from "./HUD.js";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
@@ -20,8 +20,6 @@ function Pet(props) {
   const [getEyeIndex, setGetEyeIndex] = useState("Sad");
   const [getMouthIndex, setGetMouthIndex] = useState("Sad");
   const [getCoins, setCoins] = useState(1);
-
-  const count = 0;
 
   useEffect(() => {
     getCoinFunction();
@@ -44,9 +42,12 @@ function Pet(props) {
     } catch (e) {}
   };
 
-  const getCoinFunction = () => {
+  const getCoinFunction = async () => {
     try {
-      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+      const awaitSync = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitSync);
+      value ? setCoins(value) : setCoins(0);
+      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
@@ -81,6 +82,7 @@ function Pet(props) {
   return (
     <TouchableOpacity
       onPress={() => {
+        props.reGet();
         if (getCoins == null) {
           setCoins(1);
         } else {

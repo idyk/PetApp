@@ -8,7 +8,6 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import Pet from "./Pet.js";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,18 +26,6 @@ function Customize() {
     } else {
       alert("No data saved.");
     }
-  };
-
-  const getValueFunction = () => {
-    //function to get the value from AsyncStorage
-    try {
-      AsyncStorage.getItem("eyeIndex").then((value) => setEyeInputValue(value));
-    } catch (e) {}
-    try {
-      AsyncStorage.getItem("mouthIndex").then((value) =>
-        setMouthInputValue(value)
-      );
-    } catch (e) {}
   };
 
   return (

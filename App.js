@@ -20,9 +20,38 @@ function InventoryScreen() {
 }
 
 function ShopScreen() {
+  const [getCoins, setCoins] = useState(0);
+
+  useEffect(() => {
+    getValueFunction();
+  }, []);
+
+  const getValueFunction = async () => {
+    try {
+      const awaitSync = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitSync);
+      value ? setCoins(value) : setCoins(0);
+      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const saveValueFunction = () => {
+    alert("saving");
+    AsyncStorage.setItem("coins", getCoins.toString());
+    alert("Data saved!");
+  };
+
+  function subTen() {
+    alert("value before - 10: " + getCoins);
+    setCoins(getCoins - 10);
+    alert("value after - 10: " + getCoins);
+  }
+
   return (
     <View>
-      <Shop />
+      <Shop subTen={() => subTen()} getCoins={getCoins} setCoins={setCoins} />
     </View>
   );
 }
@@ -46,18 +75,28 @@ function SettingsScreen() {
 function StartScreen({ navigation }) {
   const isFocused = useIsFocused();
 
-  const [getCoins, setCoins] = useState(1);
+  const [getCoins, setCoins] = useState(0);
 
   useEffect(() => {
     getValueFunction();
+    // alert("loading with " + getCoins);
   });
 
-  const getValueFunction = () => {
+  const getValueFunction = async () => {
     try {
-      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+      const awaitSync = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitSync);
+      value ? setCoins(value) : setCoins(0);
+      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
+  };
+
+  const saveValueFunction = async () => {
+    alert("saving");
+    await AsyncStorage.setItem("coins", getCoins.toString());
+    alert("Data saved!");
   };
 
   return (
@@ -73,7 +112,10 @@ function StartScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Shop")}
+          onPress={() => {
+            saveValueFunction();
+            navigation.navigate("Shop");
+          }}
           style={styles.buttonShop}
         >
           <Text style={styles.buttonText}>Shop</Text>
@@ -167,23 +209,3 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
 });
-
-//App
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <HUD />
-//       <Pet />
-//       <Buttons />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
