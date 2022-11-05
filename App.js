@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 //import Buttons from "./components/Buttons.js";
-import HUD from "./src/components/HUD.js";
-import Pet from "./src/components/Pet.js";
-import Inventory from "./src/components/Inventory.js";
-import Shop from "./src/components/Shop.js";
-import Customize from "./src/components/Customize.js";
-import Settings from "./src/components/Settings.js";
+import HUD from "./components/HUD.js";
+import Pet from "./components/Pet.js";
+import Inventory from "./components/Inventory.js";
+import Shop from "./components/Shop.js";
+import Customize from "./components/Customize.js";
+import Settings from "./components/Settings.js";
 
 global.eyesIndex = 1;
 
@@ -45,11 +45,11 @@ function SettingsScreen() {
 }
 
 function StartScreen({ navigation }) {
-  const [eye, setEye] = useState(0);
+  const isFocused = useIsFocused();
   return (
     <View style={styles.container}>
       <HUD />
-      <Pet eye={eye} eyeChanger={setEye} />
+      <Pet />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Inventory")}
@@ -85,7 +85,7 @@ function StartScreen({ navigation }) {
 
 const Stack = createNativeStackNavigator();
 
-export default function App({ eyes }) {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>

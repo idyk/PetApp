@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,19 +9,32 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const eyesArray = new Array("Sad", "Angry", "Neutral");
-const mouthArray = new Array("Sad", "Angry", "Neutral");
-
-var eyesIndex = 0;
-var mouthIndex = 0;
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
 //Parent of customize?
 
-function Pet({ eye, eyeChanger }) {
+function Pet() {
+  const [getEyeIndex, setGetEyeIndex] = useState("Sad");
+
+  useEffect(() => {
+    getValueFunction();
+  });
+
+  const getValueFunction = () => {
+    //function to get the value from AsyncStorage
+    AsyncStorage.getItem("any_key_here").then(
+      (eyeInputValue) =>
+        //AsyncStorage returns a promise so adding a callback to get the value
+        setGetEyeIndex(eyeInputValue)
+      //Setting the value in Text
+    );
+  };
+
   return (
     <View style={styles.container}>
+      <Text>{"Current eye index: " + getEyeIndex}</Text>
       <View
         style={{
           position: "absolute",
@@ -41,7 +54,7 @@ function Pet({ eye, eyeChanger }) {
       >
         <Image
           style={styles.imageSize}
-          source={require("../assets/eyes" + eyesArray[eye] + ".png")}
+          source={require("../assets/eyes" + getEyeIndex + ".png")}
         />
       </View>
       {/* <View
@@ -58,6 +71,31 @@ function Pet({ eye, eyeChanger }) {
     </View>
   );
 }
+
+function setEyesIndex({ value }) {
+  eyesIndex = 2;
+}
+
+const readData = async () => {
+  try {
+    const value = await AsyncStorage.getItem(STORAGE_KEY);
+
+    if (value !== null) {
+      setEyesIndex(value);
+    }
+  } catch (e) {
+    alert("Failed to fetch the input from storage");
+  }
+};
+
+const saveData = async () => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, eye);
+    alert("Data successfully saved");
+  } catch (e) {
+    alert("Failed to save the data to the storage");
+  }
+};
 
 const styles = StyleSheet.create({
   container: {
