@@ -13,53 +13,44 @@ import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// const StartScreen = () => {
-//   const [eyeIndex, setEyeIndex] = useState(0);
-//   const navigation = useNavigation();
-//   const goToStartScreen = () => {
-//     navigation.navigate("Start", {
-//       eyeIndex,
-//     });
-//   };
-// };
-
-//i literally just want to pass the index over to Pet and keep it.
-
-const Customize = () => {
-  // readData();
+function Customize() {
   const [eyeInputValue, setEyeInputValue] = useState("Sad");
-
-  // const save = (word) => {
-  //   saveValueFunction();
-  // };
+  const [mouthInputValue, setMouthInputValue] = useState("Sad");
 
   const saveValueFunction = () => {
     alert(eyeInputValue);
-    //function to save the value in AsyncStorage
-    if (eyeInputValue) {
-      //To check the input not empty
-      AsyncStorage.setItem("any_key_here", eyeInputValue);
-      //Setting a data to a AsyncStorage with respect to a key
-      alert("Data Saved");
-      //alert to confirm
+    alert(mouthInputValue);
+    if (eyeInputValue && mouthInputValue) {
+      AsyncStorage.setItem("eyeIndex", eyeInputValue);
+      AsyncStorage.setItem("mouthIndex", mouthInputValue);
+      alert("Data saved!");
     } else {
-      alert("Please fill data");
-      //alert for the empty InputText
+      alert("No data saved.");
     }
   };
 
   const getValueFunction = () => {
     //function to get the value from AsyncStorage
-    AsyncStorage.getItem("any_key_here").then(
-      (value) =>
-        //AsyncStorage returns a promise so adding a callback to get the value
-        setGetValue(value)
-      //Setting the value in Text
-    );
+    try {
+      AsyncStorage.getItem("eyeIndex").then((value) => setEyeInputValue(value));
+    } catch (e) {
+      // setEyeInputValue("Sad");
+    }
+    try {
+      AsyncStorage.getItem("mouthIndex").then((value) =>
+        setMouthInputValue(value)
+      );
+    } catch (e) {
+      //setMouthInputValue("Sad");
+    }
   };
+
+  //getValueFunction();
+
   return (
     <View>
-      <Text>Eyes index: {eyeInputValue}</Text>
+      {/* <Text>Eyes index: {eyeInputValue}</Text>
+      <Text>Mouth index: {mouthInputValue}</Text> */}
       {/* <Text>Mouth index: {mouthIndex}</Text> */}
       <View style={styles.container}>
         <TouchableOpacity
@@ -89,54 +80,32 @@ const Customize = () => {
           <Text style={styles.buttonText}>Eye 3</Text>
         </TouchableOpacity>
       </View>
-      {/* <View style={styles.container}>
+      <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => setMouthIndex(0)}
+          onPress={() => setMouthInputValue("Sad")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Mouth 1</Text>
+          <Text style={styles.buttonText}>Sad</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setMouthIndex(1)}
+          onPress={() => setMouthInputValue("Happy")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Mouth 2</Text>
+          <Text style={styles.buttonText}>Happy</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setMouthIndex(2)}
+          onPress={() => setMouthInputValue("Neutral")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Mouth 3</Text>
+          <Text style={styles.buttonText}>Neutral</Text>
         </TouchableOpacity>
-      </View> */}
-      {/* <Pet /> */}
+      </View>
       <Button title="Submit" onPress={saveValueFunction} color="green" />
     </View>
   );
-};
-
-// const readData = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem(STORAGE_KEY);
-
-//     if (value !== null) {
-//       setEyesIndex(value);
-//     }
-//   } catch (e) {
-//     alert("Failed to fetch the input from storage");
-//   }
-// };
-
-// const saveData = async () => {
-//   try {
-//     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(eye));
-//     alert("Data successfully saved");
-//   } catch (e) {
-//     alert("Failed to save the data to the storage");
-//   }
-// };
+}
 
 const styles = StyleSheet.create({
   container: {

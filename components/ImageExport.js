@@ -15,4 +15,16 @@ export const CrapFacials = {
     imgName: "Neutral",
     uri: require("../assets/images/eyesNeutral.png"),
   },
+  mouthSad: {
+    imgName: "SadMouth",
+    uri: require("../assets/images/mouthSad.png"),
+  },
+  mouthHappy: {
+    imgName: "HappyMouth",
+    uri: require("../assets/images/mouthHappy.png"),
+  },
+  mouthNeutral: {
+    imgName: "NeutralMouth",
+    uri: require("../assets/images/mouthNeutral.png"),
+  },
 };

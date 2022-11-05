@@ -14,23 +14,26 @@ import { CrapFacials } from "./ImageExport.js";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
-//Parent of customize?
 
 function Pet() {
   const [getEyeIndex, setGetEyeIndex] = useState("Sad");
+  const [getMouthIndex, setGetMouthIndex] = useState("Sad");
 
   useEffect(() => {
     getValueFunction();
   });
 
   const getValueFunction = () => {
-    //function to get the value from AsyncStorage
-    AsyncStorage.getItem("any_key_here").then(
-      (eyeInputValue) =>
-        //AsyncStorage returns a promise so adding a callback to get the value
+    try {
+      AsyncStorage.getItem("eyeIndex").then((eyeInputValue) =>
         setGetEyeIndex(eyeInputValue)
-      //Setting the value in Text
-    );
+      );
+    } catch (e) {}
+    try {
+      AsyncStorage.getItem("mouthIndex").then((mouthInputValue) =>
+        setGetMouthIndex(mouthInputValue)
+      );
+    } catch (e) {}
   };
 
   let imgSource = null;
@@ -42,9 +45,17 @@ function Pet() {
     imgSource = CrapFacials.eyesSad.uri;
   }
 
+  let imgSourceMouth = null;
+  if (getMouthIndex == "Happy") {
+    imgSourceMouth = CrapFacials.mouthHappy.uri;
+  } else if (getMouthIndex == "Neutral") {
+    imgSourceMouth = CrapFacials.mouthNeutral.uri;
+  } else {
+    imgSourceMouth = CrapFacials.mouthSad.uri;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>{"Current eye index: " + getEyeIndex}</Text>
       <View
         style={{
           position: "absolute",
@@ -61,45 +72,17 @@ function Pet() {
       >
         <Image style={styles.imageSize} source={imgSource} />
       </View>
-      {/* <View
+      <View
         style={{
           position: "absolute",
           zIndex: 2,
         }}
       >
-        <Image
-          style={styles.imageSize}
-          source={require("../assets/mouth" + mouthArray[mouthIndex] + ".png")}
-        />
-      </View> */}
+        <Image style={styles.imageSize} source={imgSourceMouth} />
+      </View>
     </View>
   );
 }
-
-function setEyesIndex({ value }) {
-  eyesIndex = 2;
-}
-
-const readData = async () => {
-  try {
-    const value = await AsyncStorage.getItem(STORAGE_KEY);
-
-    if (value !== null) {
-      setEyesIndex(value);
-    }
-  } catch (e) {
-    alert("Failed to fetch the input from storage");
-  }
-};
-
-const saveData = async () => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, eye);
-    alert("Data successfully saved");
-  } catch (e) {
-    alert("Failed to save the data to the storage");
-  }
-};
 
 const styles = StyleSheet.create({
   container: {
