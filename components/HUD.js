@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const HUD = () => {
+  const [getCoins, setCoins] = useState(1);
+
+  const getValueFunction = () => {
+    try {
+      AsyncStorage.getItem("coins").then((value) => setCoins(value));
+      alert("HUD coins: " + getCoins);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getValueFunction();
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.progressBarOne}>
         <Text>Hunger Bar</Text>
       </View>
       <View style={styles.coins}>
-        <Text>Coins</Text>
+        <Text>{"Coins:" + getCoins}</Text>
       </View>
     </View>
   );

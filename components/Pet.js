@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,9 +15,10 @@ import { CrapFacials } from "./ImageExport.js";
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
 
-function Pet() {
+function Pet(props) {
   const [getEyeIndex, setGetEyeIndex] = useState("Sad");
   const [getMouthIndex, setGetMouthIndex] = useState("Sad");
+  const [getCoins, setCoins] = useState(1);
 
   useEffect(() => {
     getValueFunction();
@@ -34,6 +35,23 @@ function Pet() {
         setGetMouthIndex(mouthInputValue)
       );
     } catch (e) {}
+  };
+
+  const getCoinFunction = () => {
+    try {
+      AsyncStorage.getItem("coins").then((value) => setCoins(value));
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const saveValueFunction = () => {
+    if (getCoins) {
+      AsyncStorage.setItem("coins", getCoins);
+      alert("Data saved with coins increase: " + getCoins);
+    } else {
+      alert("No data saved.");
+    }
   };
 
   let imgSource = null;
@@ -55,32 +73,42 @@ function Pet() {
   }
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          position: "absolute",
-          zIndex: 0,
-        }}
-      >
-        <Image style={styles.imageSize} source={CrapFacials.crapBase.uri} />
+    <TouchableOpacity
+      onPress={() => {
+        //setCoins(getCoinFunction());
+        alert("Coins before save and increase: " + getCoins);
+        setCoins(getCoins + 1);
+
+        saveValueFunction();
+      }}
+    >
+      <View style={styles.container}>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 0,
+          }}
+        >
+          <Image style={styles.imageSize} source={CrapFacials.crapBase.uri} />
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 1,
+          }}
+        >
+          <Image style={styles.imageSize} source={imgSource} />
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 2,
+          }}
+        >
+          <Image style={styles.imageSize} source={imgSourceMouth} />
+        </View>
       </View>
-      <View
-        style={{
-          position: "absolute",
-          zIndex: 1,
-        }}
-      >
-        <Image style={styles.imageSize} source={imgSource} />
-      </View>
-      <View
-        style={{
-          position: "absolute",
-          zIndex: 2,
-        }}
-      >
-        <Image style={styles.imageSize} source={imgSourceMouth} />
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

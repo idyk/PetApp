@@ -33,25 +33,16 @@ function Customize() {
     //function to get the value from AsyncStorage
     try {
       AsyncStorage.getItem("eyeIndex").then((value) => setEyeInputValue(value));
-    } catch (e) {
-      // setEyeInputValue("Sad");
-    }
+    } catch (e) {}
     try {
       AsyncStorage.getItem("mouthIndex").then((value) =>
         setMouthInputValue(value)
       );
-    } catch (e) {
-      //setMouthInputValue("Sad");
-    }
+    } catch (e) {}
   };
-
-  //getValueFunction();
 
   return (
     <View>
-      {/* <Text>Eyes index: {eyeInputValue}</Text>
-      <Text>Mouth index: {mouthInputValue}</Text> */}
-      {/* <Text>Mouth index: {mouthIndex}</Text> */}
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
@@ -102,7 +93,11 @@ function Customize() {
           <Text style={styles.buttonText}>Neutral</Text>
         </TouchableOpacity>
       </View>
-      <Button title="Submit" onPress={saveValueFunction} color="green" />
+      <Button
+        title="Save Customization"
+        onPress={saveValueFunction}
+        color="green"
+      />
     </View>
   );
 }
