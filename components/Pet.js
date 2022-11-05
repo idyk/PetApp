@@ -87,6 +87,7 @@ function Pet(props) {
           setCoins(parseInt(getCoins) + 1);
         }
         saveValueFunction();
+        props.reGet();
       }}
     >
       <View style={styles.container}>

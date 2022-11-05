@@ -55,7 +55,6 @@ function StartScreen({ navigation }) {
   const getValueFunction = () => {
     try {
       AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
-      alert("HUD coins: " + getCoins);
     } catch (e) {
       alert(e);
     }
@@ -64,7 +63,7 @@ function StartScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <HUD getCoins={parseInt(getCoins)} />
-      <Pet />
+      <Pet reGet={() => getValueFunction()} />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Inventory")}
