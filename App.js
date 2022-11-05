@@ -37,9 +37,9 @@ function ShopScreen() {
     }
   };
 
-  const saveValueFunction = () => {
+  const saveValueFunction = async () => {
     alert("saving");
-    AsyncStorage.setItem("coins", getCoins.toString());
+    await AsyncStorage.setItem("coins", getCoins.toString());
     alert("Data saved!");
   };
 
@@ -47,6 +47,7 @@ function ShopScreen() {
     alert("value before - 10: " + getCoins);
     setCoins(getCoins - 10);
     alert("value after - 10: " + getCoins);
+    saveValueFunction();
   }
 
   return (
@@ -76,18 +77,26 @@ function StartScreen({ navigation }) {
   const isFocused = useIsFocused();
 
   const [getCoins, setCoins] = useState(0);
+  const [getFood, setFood] = useState(1);
 
   useEffect(() => {
     getValueFunction();
-    // alert("loading with " + getCoins);
   });
 
-  const getValueFunction = async () => {
+  const getValueFunction = () => {
     try {
-      const awaitSync = await AsyncStorage.getItem("coins");
-      const value = parseInt(awaitSync);
-      value ? setCoins(value) : setCoins(0);
-      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+      // const awaitSync = await AsyncStorage.getItem("coins");
+      // const value = parseInt(awaitSync);
+      // value ? setCoins(value) : setCoins(0);
+      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+    } catch (e) {
+      alert(e);
+    }
+    try {
+      // const awaitSync = await AsyncStorage.getItem("food");
+      // const value = parseInt(awaitSync);
+      // value ? setFood(value) : setFood(1);
+      AsyncStorage.getItem("food").then((value) => parseInt(setFood(value)));
     } catch (e) {
       alert(e);
     }
@@ -96,6 +105,7 @@ function StartScreen({ navigation }) {
   const saveValueFunction = async () => {
     alert("saving");
     await AsyncStorage.setItem("coins", getCoins.toString());
+    await AsyncStorage.setItem("food", getFood.toString());
     alert("Data saved!");
   };
 
@@ -103,6 +113,7 @@ function StartScreen({ navigation }) {
     <View style={styles.container}>
       <HUD getCoins={parseInt(getCoins)} />
       <Pet reGet={() => getValueFunction()} />
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Inventory")}
@@ -111,7 +122,7 @@ function StartScreen({ navigation }) {
           <Text style={styles.buttonText}>Inventory</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             saveValueFunction();
             navigation.navigate("Shop");
@@ -119,7 +130,7 @@ function StartScreen({ navigation }) {
           style={styles.buttonShop}
         >
           <Text style={styles.buttonText}>Shop</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Customize")}
@@ -133,6 +144,26 @@ function StartScreen({ navigation }) {
           style={styles.buttonSettings}
         >
           <Text style={styles.buttonText}>Settings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonSettings}
+          onPress={() => {
+            alert("food: " + getFood);
+            if (getCoins >= 10) {
+              // const val = getFood;
+              // setFood(getFood + 1);
+              // alert("food: " + getFood);
+              // setFood(parseInt(getFood) + 1);
+              setCoins(parseInt(getCoins) - 10);
+              alert("coins:" + getCoins);
+            } else {
+              alert("not enough coins!");
+            }
+            saveValueFunction();
+            getValueFunction();
+          }}
+        >
+          <Text>Buy food </Text>
         </TouchableOpacity>
       </View>
     </View>
