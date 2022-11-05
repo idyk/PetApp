@@ -9,6 +9,7 @@ import Inventory from "./components/Inventory.js";
 import Shop from "./components/Shop.js";
 import Customize from "./components/Customize.js";
 import Settings from "./components/Settings.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function InventoryScreen() {
   return (
@@ -44,9 +45,25 @@ function SettingsScreen() {
 
 function StartScreen({ navigation }) {
   const isFocused = useIsFocused();
+
+  const [getCoins, setCoins] = useState(1);
+
+  useEffect(() => {
+    getValueFunction();
+  });
+
+  const getValueFunction = () => {
+    try {
+      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
+      alert("HUD coins: " + getCoins);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <HUD />
+      <HUD getCoins={parseInt(getCoins)} />
       <Pet />
       <View style={styles.buttonContainer}>
         <TouchableOpacity

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrapFacials } from "./ImageExport.js";
+import HUD from "./HUD.js";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
@@ -23,9 +24,12 @@ function Pet(props) {
   const count = 0;
 
   useEffect(() => {
-    getValueFunction();
     getCoinFunction();
   }, []);
+
+  useEffect(() => {
+    getValueFunction();
+  });
 
   const getValueFunction = () => {
     try {
@@ -51,7 +55,6 @@ function Pet(props) {
   const saveValueFunction = () => {
     if (getCoins) {
       AsyncStorage.setItem("coins", getCoins.toString());
-      //alert("Data saved with coins increase: " + getCoins.toString());
     } else {
       alert("No data saved.");
     }
