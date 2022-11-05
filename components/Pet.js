@@ -10,6 +10,7 @@ import {
   Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CrapFacials } from "./ImageExport.js";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
@@ -32,6 +33,15 @@ function Pet() {
     );
   };
 
+  let imgSource = null;
+  if (getEyeIndex == "Angry") {
+    imgSource = CrapFacials.eyesAngry.uri;
+  } else if (getEyeIndex == "Neutral") {
+    imgSource = CrapFacials.eyesNeutral.uri;
+  } else {
+    imgSource = CrapFacials.eyesSad.uri;
+  }
+
   return (
     <View style={styles.container}>
       <Text>{"Current eye index: " + getEyeIndex}</Text>
@@ -41,10 +51,7 @@ function Pet() {
           zIndex: 0,
         }}
       >
-        <Image
-          style={styles.imageSize}
-          source={require("../assets/crapBase.png")}
-        />
+        <Image style={styles.imageSize} source={CrapFacials.crapBase.uri} />
       </View>
       <View
         style={{
@@ -52,10 +59,7 @@ function Pet() {
           zIndex: 1,
         }}
       >
-        <Image
-          style={styles.imageSize}
-          source={require("../assets/eyes" + getEyeIndex + ".png")}
-        />
+        <Image style={styles.imageSize} source={imgSource} />
       </View>
       {/* <View
         style={{
