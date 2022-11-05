@@ -20,9 +20,12 @@ function Pet(props) {
   const [getMouthIndex, setGetMouthIndex] = useState("Sad");
   const [getCoins, setCoins] = useState(1);
 
+  const count = 0;
+
   useEffect(() => {
     getValueFunction();
-  });
+    getCoinFunction();
+  }, []);
 
   const getValueFunction = () => {
     try {
@@ -39,7 +42,7 @@ function Pet(props) {
 
   const getCoinFunction = () => {
     try {
-      AsyncStorage.getItem("coins").then((value) => setCoins(value));
+      AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
@@ -47,8 +50,8 @@ function Pet(props) {
 
   const saveValueFunction = () => {
     if (getCoins) {
-      AsyncStorage.setItem("coins", getCoins);
-      alert("Data saved with coins increase: " + getCoins);
+      AsyncStorage.setItem("coins", getCoins.toString());
+      //alert("Data saved with coins increase: " + getCoins.toString());
     } else {
       alert("No data saved.");
     }
@@ -75,10 +78,11 @@ function Pet(props) {
   return (
     <TouchableOpacity
       onPress={() => {
-        //setCoins(getCoinFunction());
-        alert("Coins before save and increase: " + getCoins);
-        setCoins(getCoins + 1);
-
+        if (getCoins == null) {
+          setCoins(1);
+        } else {
+          setCoins(parseInt(getCoins) + 1);
+        }
         saveValueFunction();
       }}
     >
