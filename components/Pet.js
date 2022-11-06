@@ -66,7 +66,8 @@ function Pet(props) {
   const saveValueFunction = async () => {
     if (true) {
       let newVal = props.getCoins + 1;
-      let fullVal = props.getFullness - props.getCoins * 0.5;
+      let fullVal = props.getFullness - Math.floor(Math.random() * 4.5);
+      console.log("fullVal: " + fullVal);
       if (newVal.toString() == "NaN") {
         newVal = 1;
       }
