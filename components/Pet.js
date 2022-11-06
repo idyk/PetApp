@@ -66,13 +66,15 @@ function Pet(props) {
   const saveValueFunction = async () => {
     if (true) {
       let newVal = props.getCoins + 1;
-      let fullVal = props.getFullness - Math.floor(Math.random() * 4.5);
+      let fullVal = Math.floor(
+        props.getFullness - Math.floor(Math.random() * 2)
+      );
       console.log("fullVal: " + fullVal);
       if (newVal.toString() == "NaN") {
         newVal = 1;
       }
       if (fullVal <= 0) {
-        alert("LOSE");
+        alert("You lose! Resetting coins and fullness.");
         newVal = 0;
         fullVal = 0;
         await AsyncStorage.setItem("coins", newVal.toString());

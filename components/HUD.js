@@ -6,12 +6,12 @@ const HUD = (props) => {
     <View style={styles.container}>
       <View style={styles.fullnessBox}>
         <Text style={styles.fullnessText}>{"FULLNESS"}</Text>
-        <hr style={styles.headerRule} />
+        {/* <hr style={styles.headerRule} /> */}
         <Text style={styles.fullnessValue}>{props.getFullness}</Text>
       </View>
       <View style={styles.coinsBox}>
         <Text style={styles.fullnessText}>{"COINS"}</Text>
-        <hr style={styles.headerRule} />
+        {/* <hr style={styles.headerRule} /> */}
         <Text style={styles.fullnessValue}>{props.getCoins}</Text>
       </View>
     </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 
   fullnessText: {
     marginTop: 8,
-    fontFamily: "Cochin",
+    //fontFamily: "Cochin",
     textAlign: "center",
   },
 

@@ -6,7 +6,7 @@ import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import HUD from "./components/HUD.js";
 import Pet from "./components/Pet.js";
 import Customize from "./components/Customize.js";
-import Settings from "./components/Settings.js";
+import Settings from "./components/About.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function CustomizeScreen() {
@@ -43,7 +43,11 @@ function StartScreen({ navigation }) {
     try {
       const awaitSync = await AsyncStorage.getItem("coins");
       const value = parseInt(awaitSync);
-      value ? setCoins(value) : setCoins();
+      if (value.toString() == "NaN") {
+        setCoins(0);
+      } else {
+        value ? setCoins(value) : setCoins();
+      }
     } catch (e) {
       alert(e);
     }
@@ -61,9 +65,9 @@ function StartScreen({ navigation }) {
 
   const saveValueFunction = async (value) => {
     let newVal = parseInt(getCoins - value);
-    alert("saving with " + newVal);
+    //alert("saving with " + newVal);
     await AsyncStorage.setItem("coins", newVal.toString());
-    alert("Data saved!");
+    //alert("Data saved!");
   };
 
   const saveFullness = async (value) => {
@@ -90,37 +94,37 @@ function StartScreen({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={styles.buttonSettings}
+          style={styles.buttonFeed}
           onPress={() => {
             let subtractVal = 0;
             let addVal = 0;
             if (getCoins >= 10 && getFullness > 0) {
               subtractVal = 10;
               addVal = 10;
-              alert("getFullness after feeding crap: " + getFullness);
+              //("getFullness after feeding crap: " + getFullness);
             } else {
-              alert("not enough coins!");
+              //alert("not enough coins!");
             }
             saveFullness(addVal);
             saveValueFunction(subtractVal);
             getValueFunction(subtractVal);
           }}
         >
-          <Text>Feed crap </Text>
+          <Text style={styles.buttonText}>FEED CRAP </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Customize Your Crap")}
           style={styles.buttonCustomize}
         >
-          <Text style={styles.buttonText}>Customize</Text>
+          <Text style={styles.buttonText}>CUSTOMIZE</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Settings")}
-          style={styles.buttonSettings}
+          onPress={() => navigation.navigate("About Page")}
+          style={styles.buttonAbout}
         >
-          <Text style={styles.buttonText}>Settings</Text>
+          <Text style={styles.buttonText}>HELP</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -135,7 +139,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Your Crap's Home" component={StartScreen} />
         <Stack.Screen name="Customize Your Crap" component={CustomizeScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="About Page" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -147,39 +151,44 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   buttonText: {
-    fontSize: 20,
+    //fontFamily: "sans",
+    margin: 12,
+    fontSize: 12,
     textAlign: "center",
   },
 
-  buttonInv: {
-    backgroundColor: "#f4cf46",
-    elevation: 10,
-    borderRadius: 3,
-    flex: 1,
-    height: "auto",
-    margin: 1,
-  },
-
-  buttonShop: {
-    backgroundColor: "#73f07d",
-    elevation: 10,
-    borderRadius: 3,
-    flex: 1,
-    height: "auto",
-    margin: 1,
-  },
-
   buttonCustomize: {
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
     backgroundColor: "#66dfd4",
     elevation: 10,
     borderRadius: 3,
     flex: 1,
-    height: "auto",
+    height: 45,
+    width: 110,
     margin: 1,
   },
 
-  buttonSettings: {
+  buttonFeed: {
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    backgroundColor: "#FFA500",
+    elevation: 10,
+    borderRadius: 3,
+    flex: 1,
+    height: 45,
+    width: 110,
+    margin: 1,
+  },
+
+  buttonAbout: {
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
     backgroundColor: "#aacbd5",
     elevation: 10,
     borderRadius: 3,

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,24 +7,25 @@ import {
   View,
   Alert,
   TouchableOpacity,
+  Image,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CrapFacials } from "./ImageExport.js";
 
 function Customize() {
   const [eyeInputValue, setEyeInputValue] = useState("Sad");
   const [mouthInputValue, setMouthInputValue] = useState("Sad");
 
   const saveValueFunction = () => {
-    alert(eyeInputValue);
-    alert(mouthInputValue);
+    //alert(eyeInputValue);
+    // alert(mouthInputValue);
     if (eyeInputValue && mouthInputValue) {
       AsyncStorage.setItem("eyeIndex", eyeInputValue);
       AsyncStorage.setItem("mouthIndex", mouthInputValue);
-      alert("Data saved!");
+      //alert("Data saved!");
     } else {
-      alert("No data saved.");
+      // alert("No data saved.");
     }
   };
 
@@ -37,7 +38,8 @@ function Customize() {
           }}
           style={styles.eyeStylesButton}
         >
-          <Text style={styles.buttonText}>Eye 1</Text>
+          <Text style={styles.buttonText}>Eye Style: Sad</Text>
+          <Image style={styles.imageSize} source={CrapFacials.eyesSad.uri} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -46,7 +48,8 @@ function Customize() {
           }}
           style={styles.eyeStylesButton}
         >
-          <Text style={styles.buttonText}>Eye 2</Text>
+          <Text style={styles.buttonText}>Eye Style: Angry</Text>
+          <Image style={styles.imageSize} source={CrapFacials.eyesAngry.uri} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -55,7 +58,11 @@ function Customize() {
           }}
           style={styles.eyeStylesButton}
         >
-          <Text style={styles.buttonText}>Eye 3</Text>
+          <Text style={styles.buttonText}>Eye Style: Neutral</Text>
+          <Image
+            style={styles.imageSize}
+            source={CrapFacials.eyesNeutral.uri}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
@@ -63,27 +70,35 @@ function Customize() {
           onPress={() => setMouthInputValue("Sad")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Sad</Text>
+          <View style={styles.centerView}>
+            <Text style={styles.buttonText}>Mouth Style: Sad</Text>
+            <Image style={styles.imageSize} source={CrapFacials.mouthSad.uri} />
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => setMouthInputValue("Happy")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Happy</Text>
+          <Text style={styles.buttonText}>Mouth Style: Happy</Text>
+          <Image style={styles.imageSize} source={CrapFacials.mouthHappy.uri} />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => setMouthInputValue("Neutral")}
           style={styles.mouthStylesButton}
         >
-          <Text style={styles.buttonText}>Neutral</Text>
+          <Text style={styles.buttonText}>Mouth Style: Neutral</Text>
+          <Image
+            style={styles.imageSize}
+            source={CrapFacials.mouthNeutral.uri}
+          />
         </TouchableOpacity>
       </View>
       <Button
         title="Save Customization"
         onPress={saveValueFunction}
-        color="green"
+        color="#b8e567"
       />
     </View>
   );
@@ -92,28 +107,36 @@ function Customize() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    flex: 1,
   },
   eyeStylesButton: {
     flex: 1,
-    backgroundColor: "red",
-    width: 100,
-    height: 100,
+    backgroundColor: "#F88379",
+    width: "auto",
+    height: "auto",
     borderRadius: 5,
     margin: 5,
     padding: 5,
+    textAlign: "center",
   },
   mouthStylesButton: {
     flex: 1,
-    backgroundColor: "blue",
-    width: 100,
-    height: 100,
+    backgroundColor: "#DAF7A6",
+    width: "auto",
+    height: "auto",
     borderRadius: 5,
     margin: 5,
     padding: 5,
   },
   buttonText: {
+    fontSize: 10,
     textAlign: "center",
+  },
+  imageSize: {
+    width: 150,
+    height: 150,
+  },
+  centerView: {
+    justifyContent: "center",
   },
 });
 
