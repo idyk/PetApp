@@ -47,7 +47,6 @@ function Pet(props) {
       const awaitSync = await AsyncStorage.getItem("coins");
       const value = parseInt(awaitSync);
       value ? setCoins(value) : setCoins(0);
-      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
@@ -57,7 +56,6 @@ function Pet(props) {
     if (true) {
       let newVal = props.getCoins + 1;
       if (newVal.toString() == "NaN") {
-        //alert("???" + newVal.toString());
         newVal = 1;
       }
       await AsyncStorage.setItem("coins", newVal.toString());
@@ -87,11 +85,6 @@ function Pet(props) {
   return (
     <TouchableOpacity
       onPress={() => {
-        // if (getCoins == null) {
-        //   setCoins(1);
-        // } else {
-        //   setCoins(parseInt(props.getCoins) + 1);
-        // }
         saveValueFunction();
         props.reGet();
       }}

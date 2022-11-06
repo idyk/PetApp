@@ -11,52 +11,6 @@ import Customize from "./components/Customize.js";
 import Settings from "./components/Settings.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function InventoryScreen() {
-  return (
-    <View>
-      <Inventory />
-    </View>
-  );
-}
-
-function ShopScreen() {
-  const [getCoins, setCoins] = useState(0);
-
-  // useEffect(() => {
-  //   getValueFunction();
-  // }, []);
-
-  const getValueFunction = async () => {
-    try {
-      const awaitSync = await AsyncStorage.getItem("coins");
-      const value = parseInt(awaitSync);
-      value ? setCoins(value) : setCoins(0);
-      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
-    } catch (e) {
-      alert(e);
-    }
-  };
-
-  const saveValueFunction = async () => {
-    alert("saving");
-    await AsyncStorage.setItem("coins", getCoins.toString());
-    alert("Data saved!");
-  };
-
-  function subTen() {
-    alert("value before - 10: " + getCoins);
-    setCoins(getCoins - 10);
-    alert("value after - 10: " + getCoins);
-    saveValueFunction();
-  }
-
-  return (
-    <View>
-      <Shop subTen={() => subTen()} getCoins={getCoins} setCoins={setCoins} />
-    </View>
-  );
-}
-
 function CustomizeScreen() {
   return (
     <View>
@@ -77,26 +31,32 @@ function StartScreen({ navigation }) {
   const isFocused = useIsFocused();
 
   const [getCoins, setCoins] = useState(0);
-  const [getFood, setFood] = useState(1);
+  const [getFullness, setFullness] = useState(100);
 
   useEffect(() => {
     getValueFunction();
+    timeDown();
   });
+
+  useEffect(() => {
+    getFullnessFunction();
+  }, []);
 
   const getValueFunction = async () => {
     try {
       const awaitSync = await AsyncStorage.getItem("coins");
       const value = parseInt(awaitSync);
       value ? setCoins(value) : setCoins();
-      // AsyncStorage.getItem("coins").then((value) => parseInt(setCoins(value)));
     } catch (e) {
       alert(e);
     }
+  };
+
+  const getFullnessFunction = async () => {
     try {
-      // const awaitSync = await AsyncStorage.getItem("food");
-      // const value = parseInt(awaitSync);
-      // value ? setFood(value) : setFood(1);
-      //AsyncStorage.getItem("food").then((value) => parseInt(setFood(value)));
+      const awaitFull = await AsyncStorage.getItem("fullness");
+      const valueFull = parseFloat(awaitFull);
+      valueFull ? setFullness(valueFull) : setFullness(100);
     } catch (e) {
       alert(e);
     }
@@ -106,13 +66,39 @@ function StartScreen({ navigation }) {
     let newVal = parseInt(getCoins - value);
     alert("saving with " + newVal);
     await AsyncStorage.setItem("coins", newVal.toString());
-    // await AsyncStorage.setItem("food", getFood.toString());
     alert("Data saved!");
   };
 
+  const saveFullness = async (value) => {
+    console.log("value: " + value);
+    if (value >= 10) {
+      console.log("IT'S IN!");
+    }
+    console.log("getFullness: " + getFullness);
+    let newVal = parseFloat(getFullness + value);
+    console.log("newVal: " + newVal);
+    setFullness(newVal);
+    console.log("getFullness again: " + getFullness);
+    await AsyncStorage.setItem("fullness", newVal.toString());
+  };
+
+  function timeDown() {
+    setTimeout(() => {
+      console.log("1 sec delay");
+      saveFullness(-10);
+    }, 2000);
+    if (getFullness == 0) {
+      alert("You lose!");
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <HUD getCoins={parseInt(getCoins)} />
+      <HUD
+        getCoins={parseInt(getCoins)}
+        getFullness={parseFloat(getFullness)}
+        setFullness={setFullness}
+      />
       <Pet
         getCoins={parseInt(getCoins)}
         setCoins={setCoins}
@@ -125,19 +111,15 @@ function StartScreen({ navigation }) {
           style={styles.buttonSettings}
           onPress={() => {
             let subtractVal = 0;
-            alert("food: " + getFood);
+            let addVal = 0;
             if (getCoins >= 10) {
               subtractVal = 10;
-              // const val = getFood;
-              // setFood(getFood + 1);
-              // alert("food: " + getFood);
-              // setFood(parseInt(getFood) + 1);
-              alert(
-                "coins if it would work:" + parseInt(getCoins - subtractVal)
-              );
+              addVal = 10;
+              alert("getFullness after feeding crap: " + getFullness);
             } else {
               alert("not enough coins!");
             }
+            saveFullness(addVal);
             saveValueFunction(subtractVal);
             getValueFunction(subtractVal);
           }}

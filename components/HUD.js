@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 const HUD = (props) => {
-  if (props.getCoins == null) {
-    props.setCoins(1);
-  }
   return (
     <View style={styles.container}>
       <View style={styles.progressBarOne}>
-        <Text>Hunger Bar</Text>
+        <Text>{"Fullness Amount: " + props.getFullness}</Text>
       </View>
       <View style={styles.coins}>
         <Text>{"Coins:" + props.getCoins}</Text>
