@@ -35,12 +35,11 @@ function StartScreen({ navigation }) {
 
   useEffect(() => {
     getValueFunction();
-    //timeDown();
   });
 
   useEffect(() => {
     getFullnessFunction();
-  }, [getFullness]);
+  });
 
   const getValueFunction = async () => {
     try {
@@ -70,28 +69,20 @@ function StartScreen({ navigation }) {
   };
 
   const saveFullness = async (value) => {
-    console.log("value: " + value);
-    if (value >= 10) {
-      console.log("IT'S IN!");
-    }
-    console.log("getFullness: " + getFullness);
     let newVal = parseFloat(getFullness + value);
-    console.log("newVal: " + newVal);
-    //setFullness(newVal);
-    setFullness(10056 + newVal);
-    console.log("getFullness again: " + getFullness);
-    // await AsyncStorage.setItem("fullness", newVal.toString());
+    await AsyncStorage.setItem("fullness", newVal.toString());
   };
 
-  function timeDown() {
-    if (getFullness == 0) {
-      alert("You lose!");
-    }
-    setTimeout(() => {
-      console.log("1 sec delay");
-      saveFullness(-10);
-    }, 2000);
-  }
+  // function timeDown() {
+  //   if (getFullness == 0) {
+  //     alert("You lose!");
+  //   }
+  //   setTimeout(() => {
+  //     console.log("1 sec delay");
+  //     setFullness(getFullness - 10);
+  //     saveFullness();
+  //   }, 2000);
+  // }
 
   return (
     <View style={styles.container}>
@@ -105,6 +96,9 @@ function StartScreen({ navigation }) {
         setCoins={setCoins}
         reGet={() => getValueFunction()}
         reSave={() => saveValueFunction()}
+        getFullness={parseInt(getFullness)}
+        reGetFullness={() => getFullnessFunction}
+        reSaveFullness={() => saveFullness}
       />
 
       <View style={styles.buttonContainer}>

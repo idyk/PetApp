@@ -20,9 +20,10 @@ function Pet(props) {
   const [getEyeIndex, setGetEyeIndex] = useState("Sad");
   const [getMouthIndex, setGetMouthIndex] = useState("Sad");
   const [getCoins, setCoins] = useState(1);
-
+  const [getFullness, setFullness] = useState(100);
   useEffect(() => {
     getCoinFunction();
+    getFullnessFunction();
   }, []);
 
   useEffect(() => {
@@ -52,13 +53,26 @@ function Pet(props) {
     }
   };
 
+  const getFullnessFunction = async () => {
+    try {
+      const awaitFull = await AsyncStorage.getItem("fullness");
+      const valueFull = parseFloat(awaitFull);
+      valueFull ? setFullness(valueFull) : setFullness(100);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   const saveValueFunction = async () => {
     if (true) {
       let newVal = props.getCoins + 1;
+      let fullVal = props.getFullness - 10;
       if (newVal.toString() == "NaN") {
         newVal = 1;
+        fullVal = 100;
       }
       await AsyncStorage.setItem("coins", newVal.toString());
+      await AsyncStorage.setItem("fullness", fullVal.toString());
     } else {
       alert("No data saved.");
     }
@@ -87,6 +101,8 @@ function Pet(props) {
       onPress={() => {
         saveValueFunction();
         props.reGet();
+        props.reGetFullness();
+        props.reSaveFullness();
       }}
     >
       <View style={styles.container}>
