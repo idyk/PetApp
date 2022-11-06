@@ -96,7 +96,7 @@ function StartScreen({ navigation }) {
         setCoins={setCoins}
         reGet={() => getValueFunction()}
         reSave={() => saveValueFunction()}
-        getFullness={parseInt(getFullness)}
+        getFullness={parseFloat(getFullness)}
         reGetFullness={() => getFullnessFunction}
         reSaveFullness={() => saveFullness}
       />
@@ -107,7 +107,7 @@ function StartScreen({ navigation }) {
           onPress={() => {
             let subtractVal = 0;
             let addVal = 0;
-            if (getCoins >= 10) {
+            if (getCoins >= 10 && getFullness > 0) {
               subtractVal = 10;
               addVal = 10;
               alert("getFullness after feeding crap: " + getFullness);
