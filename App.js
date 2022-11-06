@@ -22,9 +22,9 @@ function InventoryScreen() {
 function ShopScreen() {
   const [getCoins, setCoins] = useState(0);
 
-  useEffect(() => {
-    getValueFunction();
-  }, []);
+  // useEffect(() => {
+  //   getValueFunction();
+  // }, []);
 
   const getValueFunction = async () => {
     try {
@@ -96,7 +96,7 @@ function StartScreen({ navigation }) {
       // const awaitSync = await AsyncStorage.getItem("food");
       // const value = parseInt(awaitSync);
       // value ? setFood(value) : setFood(1);
-      AsyncStorage.getItem("food").then((value) => parseInt(setFood(value)));
+      //AsyncStorage.getItem("food").then((value) => parseInt(setFood(value)));
     } catch (e) {
       alert(e);
     }
@@ -113,39 +113,14 @@ function StartScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <HUD getCoins={parseInt(getCoins)} />
-      <Pet reGet={() => getValueFunction()} />
+      <Pet
+        getCoins={parseInt(getCoins)}
+        setCoins={setCoins}
+        reGet={() => getValueFunction()}
+        reSave={() => saveValueFunction()}
+      />
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Inventory")}
-          style={styles.buttonInv}
-        >
-          <Text style={styles.buttonText}>Inventory</Text>
-        </TouchableOpacity>
-
-        {/* <TouchableOpacity
-          onPress={() => {
-            saveValueFunction();
-            navigation.navigate("Shop");
-          }}
-          style={styles.buttonShop}
-        >
-          <Text style={styles.buttonText}>Shop</Text>
-        </TouchableOpacity> */}
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Customize")}
-          style={styles.buttonCustomize}
-        >
-          <Text style={styles.buttonText}>Customize</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Settings")}
-          style={styles.buttonSettings}
-        >
-          <Text style={styles.buttonText}>Settings</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonSettings}
           onPress={() => {
@@ -167,7 +142,21 @@ function StartScreen({ navigation }) {
             getValueFunction(subtractVal);
           }}
         >
-          <Text>Buy food </Text>
+          <Text>Feed crap </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Customize")}
+          style={styles.buttonCustomize}
+        >
+          <Text style={styles.buttonText}>Customize</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Settings")}
+          style={styles.buttonSettings}
+        >
+          <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -181,8 +170,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="Inventory" component={InventoryScreen} />
-        {/* <Stack.Screen name="Shop" component={ShopScreen} /> */}
         <Stack.Screen name="Customize" component={CustomizeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>

@@ -53,9 +53,14 @@ function Pet(props) {
     }
   };
 
-  const saveValueFunction = () => {
-    if (getCoins) {
-      AsyncStorage.setItem("coins", getCoins.toString());
+  const saveValueFunction = async () => {
+    if (true) {
+      let newVal = props.getCoins + 1;
+      if (newVal.toString() == "NaN") {
+        //alert("???" + newVal.toString());
+        newVal = 1;
+      }
+      await AsyncStorage.setItem("coins", newVal.toString());
     } else {
       alert("No data saved.");
     }
@@ -82,11 +87,11 @@ function Pet(props) {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (getCoins == null) {
-          setCoins(1);
-        } else {
-          setCoins(parseInt(getCoins) + 1);
-        }
+        // if (getCoins == null) {
+        //   setCoins(1);
+        // } else {
+        //   setCoins(parseInt(props.getCoins) + 1);
+        // }
         saveValueFunction();
         props.reGet();
       }}
