@@ -27,4 +27,8 @@ export const CrapFacials = {
     imgName: "NeutralMouth",
     uri: require("../assets/images/mouthNeutral.png"),
   },
+  // foodIcon: {
+  //   imgName: "foodIcon",
+  //   uri: require("../assets/images/foodIcon.png"),
+  // },
 };

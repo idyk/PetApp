@@ -5,8 +5,6 @@ import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 //import Buttons from "./components/Buttons.js";
 import HUD from "./components/HUD.js";
 import Pet from "./components/Pet.js";
-import Inventory from "./components/Inventory.js";
-import Shop from "./components/Shop.js";
 import Customize from "./components/Customize.js";
 import Settings from "./components/Settings.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -73,17 +71,6 @@ function StartScreen({ navigation }) {
     await AsyncStorage.setItem("fullness", newVal.toString());
   };
 
-  // function timeDown() {
-  //   if (getFullness == 0) {
-  //     alert("You lose!");
-  //   }
-  //   setTimeout(() => {
-  //     console.log("1 sec delay");
-  //     setFullness(getFullness - 10);
-  //     saveFullness();
-  //   }, 2000);
-  // }
-
   return (
     <View style={styles.container}>
       <HUD
@@ -123,7 +110,7 @@ function StartScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Customize")}
+          onPress={() => navigation.navigate("Customize Your Crap")}
           style={styles.buttonCustomize}
         >
           <Text style={styles.buttonText}>Customize</Text>
@@ -146,8 +133,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="Customize" component={CustomizeScreen} />
+        <Stack.Screen name="Your Crap's Home" component={StartScreen} />
+        <Stack.Screen name="Customize Your Crap" component={CustomizeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
