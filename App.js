@@ -35,12 +35,12 @@ function StartScreen({ navigation }) {
 
   useEffect(() => {
     getValueFunction();
-    timeDown();
+    //timeDown();
   });
 
   useEffect(() => {
     getFullnessFunction();
-  }, []);
+  }, [getFullness]);
 
   const getValueFunction = async () => {
     try {
@@ -77,19 +77,20 @@ function StartScreen({ navigation }) {
     console.log("getFullness: " + getFullness);
     let newVal = parseFloat(getFullness + value);
     console.log("newVal: " + newVal);
-    setFullness(newVal);
+    //setFullness(newVal);
+    setFullness(10056 + newVal);
     console.log("getFullness again: " + getFullness);
-    await AsyncStorage.setItem("fullness", newVal.toString());
+    // await AsyncStorage.setItem("fullness", newVal.toString());
   };
 
   function timeDown() {
+    if (getFullness == 0) {
+      alert("You lose!");
+    }
     setTimeout(() => {
       console.log("1 sec delay");
       saveFullness(-10);
     }, 2000);
-    if (getFullness == 0) {
-      alert("You lose!");
-    }
   }
 
   return (
