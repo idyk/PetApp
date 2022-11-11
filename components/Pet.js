@@ -103,6 +103,12 @@ function Pet(props) {
         fullVal = 0;
         await AsyncStorage.setItem("coins", newVal.toString());
         await AsyncStorage.setItem("fullness", fullVal.toString());
+      } else if (fullVal >= 250) {
+        newVal = 99999;
+        fullVal = 99999;
+        await AsyncStorage.setItem("coins", "999999");
+        await AsyncStorage.setItem("fullness", "999999");
+        alert("CONGRATS, YOU WON!");
       } else {
         await AsyncStorage.setItem("coins", newVal.toString());
         await AsyncStorage.setItem("fullness", fullVal.toString());

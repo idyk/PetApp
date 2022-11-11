@@ -24,8 +24,7 @@ const Settings = () => {
           lose! {"\n"}To fight the hunger, you can{" "}
           <Text style={styles.bold}>FEED</Text> your Crap using{" "}
           <Text style={styles.bold}>COINS</Text> you earn from petting your
-          Crap! Keeping feeding and petting your Crap, and go for a high score!
-          There's no way to actually win!
+          Crap! Keeping feeding and petting your Crap, and you just might win!
           {"\n"}For further fun, you can also customize your Crap!
         </Text>
         <Text style={styles.endText}>Now THAT's CrAppy!</Text>

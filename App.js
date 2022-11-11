@@ -90,6 +90,11 @@ function StartScreen({ navigation }) {
   //This saves the amount of coins obtained into storage.
   const saveCoinsFunction = async (value) => {
     let newVal = parseInt(getCoins - value);
+    if (value == -1) {
+      newVal = 0;
+    } else {
+      newVal = parseInt(getCoins - value);
+    }
     //alert("saving with " + newVal);
     await AsyncStorage.setItem("coins", newVal.toString());
     //alert("Data saved!");
@@ -98,6 +103,11 @@ function StartScreen({ navigation }) {
   //This saves the fullness amount to storage.
   const saveFullness = async (value) => {
     let newVal = parseFloat(getFullness + value);
+    if (value == -1) {
+      newVal = parseFloat(100);
+    } else {
+      newVal = parseFloat(getFullness + value);
+    }
     await AsyncStorage.setItem("fullness", newVal.toString());
   };
 
@@ -154,6 +164,20 @@ function StartScreen({ navigation }) {
         >
           <Text style={styles.buttonText}>HELP</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            let fullVal = -1;
+            let newVal = -1;
+            saveFullness(fullVal);
+            getFullnessFunction();
+            saveCoinsFunction(newVal);
+            getCoinsFunction(newVal);
+          }}
+          style={styles.buttonReset}
+        >
+          <Text style={styles.buttonText}>RESET</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -194,7 +218,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     flex: 1,
     height: 45,
-    width: 110,
+    width: 140,
     margin: 1,
   },
 
@@ -203,6 +227,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     backgroundColor: "#aacbd5",
+    elevation: 10,
+    borderRadius: 3,
+    flex: 1,
+    height: "auto",
+    margin: 1,
+  },
+
+  buttonReset: {
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    backgroundColor: "#FF2E2E",
     elevation: 10,
     borderRadius: 3,
     flex: 1,
