@@ -2,13 +2,32 @@ import React, { props, useEffect, useState } from "react";
 import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-//import Buttons from "./components/Buttons.js";
 import HUD from "./components/HUD.js";
 import Pet from "./components/Pet.js";
 import Customize from "./components/Customize.js";
 import Settings from "./components/About.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+//Define our navigation stack.
+const navStack = createNativeStackNavigator();
+
+//Return the entire function of the app. I included the three screens for the navigation.
+export default function App() {
+  return (
+    <NavigationContainer>
+      <navStack.Navigator>
+        <navStack.Screen name="Your Crap's Home" component={StartScreen} />
+        <navStack.Screen
+          name="Customize Your Crap"
+          component={CustomizeScreen}
+        />
+        <navStack.Screen name="About Page" component={SettingsScreen} />
+      </navStack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+//Return for the customize screen.
 function CustomizeScreen() {
   return (
     <View>
@@ -17,6 +36,7 @@ function CustomizeScreen() {
   );
 }
 
+//Return for the setting screen.
 function SettingsScreen() {
   return (
     <View>
@@ -25,21 +45,23 @@ function SettingsScreen() {
   );
 }
 
+//Start screen return. It needed a lot more inner functions since it has more going on.
 function StartScreen({ navigation }) {
+  //Helps rerender the screen on focus.
   const isFocused = useIsFocused();
 
   const [getCoins, setCoins] = useState(0);
   const [getFullness, setFullness] = useState(100);
 
+  //Run these every time the screen has any change.
   useEffect(() => {
-    getValueFunction();
-  });
-
-  useEffect(() => {
+    getCoinsFunction();
     getFullnessFunction();
   });
 
-  const getValueFunction = async () => {
+  //Obtaining the coins from storage function. It looks for it in the
+  //Async storage and uses setCoins to set the value.
+  const getCoinsFunction = async () => {
     try {
       const awaitSync = await AsyncStorage.getItem("coins");
       const value = parseInt(awaitSync);
@@ -53,6 +75,8 @@ function StartScreen({ navigation }) {
     }
   };
 
+  //Obtaining the fullness from storage function. It looks for it in the
+  //Async storage and uses setFullness to set the value.
   const getFullnessFunction = async () => {
     try {
       const awaitFull = await AsyncStorage.getItem("fullness");
@@ -63,18 +87,22 @@ function StartScreen({ navigation }) {
     }
   };
 
-  const saveValueFunction = async (value) => {
+  //This saves the amount of coins obtained into storage.
+  const saveCoinsFunction = async (value) => {
     let newVal = parseInt(getCoins - value);
     //alert("saving with " + newVal);
     await AsyncStorage.setItem("coins", newVal.toString());
     //alert("Data saved!");
   };
 
+  //This saves the fullness amount to storage.
   const saveFullness = async (value) => {
     let newVal = parseFloat(getFullness + value);
     await AsyncStorage.setItem("fullness", newVal.toString());
   };
 
+  //A lot of props were needed to have a somewhat consistent interaction across
+  //all components.
   return (
     <View style={styles.container}>
       <HUD
@@ -85,8 +113,8 @@ function StartScreen({ navigation }) {
       <Pet
         getCoins={parseInt(getCoins)}
         setCoins={setCoins}
-        reGet={() => getValueFunction()}
-        reSave={() => saveValueFunction()}
+        reGet={() => getCoinsFunction()}
+        reSave={() => saveCoinsFunction()}
         getFullness={parseFloat(getFullness)}
         reGetFullness={() => getFullnessFunction}
         reSaveFullness={() => saveFullness}
@@ -106,8 +134,8 @@ function StartScreen({ navigation }) {
               //alert("not enough coins!");
             }
             saveFullness(addVal);
-            saveValueFunction(subtractVal);
-            getValueFunction(subtractVal);
+            saveCoinsFunction(subtractVal);
+            getCoinsFunction(subtractVal);
           }}
         >
           <Text style={styles.buttonText}>FEED CRAP </Text>
@@ -131,20 +159,6 @@ function StartScreen({ navigation }) {
   );
 }
 
-const Stack = createNativeStackNavigator();
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Your Crap's Home" component={StartScreen} />
-        <Stack.Screen name="Customize Your Crap" component={CustomizeScreen} />
-        <Stack.Screen name="About Page" component={SettingsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -153,7 +167,6 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    //fontFamily: "sans",
     margin: 12,
     fontSize: 12,
     textAlign: "center",

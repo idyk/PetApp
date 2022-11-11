@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+//Nothing fancy here. Just some text to explain the app in the app.
 const Settings = () => {
   return (
     <View style={styles.container}>

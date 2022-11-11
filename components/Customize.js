@@ -11,13 +11,16 @@ import {
 } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrapFacials } from "./ImageExport.js";
+
+//Used for any facial images in the app.
+import { CrapFacials } from "./Images.js";
 
 function Customize() {
   const [eyeInputValue, setEyeInputValue] = useState("Sad");
   const [mouthInputValue, setMouthInputValue] = useState("Sad");
 
-  const saveValueFunction = () => {
+  //Saving the face to be used on the pet.
+  const saveFaceFunction = () => {
     //alert(eyeInputValue);
     // alert(mouthInputValue);
     if (eyeInputValue && mouthInputValue) {
@@ -32,6 +35,8 @@ function Customize() {
   return (
     <View>
       <View style={styles.container}>
+        {/*Each TouchableOpacity contains a certain face feature to be selected.
+        It will set the face feature(s) and keep it when the user selects the save button. */}
         <TouchableOpacity
           onPress={() => {
             setEyeInputValue("Sad");
@@ -97,7 +102,7 @@ function Customize() {
       </View>
       <Button
         title="Save Customization"
-        onPress={saveValueFunction}
+        onPress={saveFaceFunction}
         color="#b8e567"
       />
     </View>

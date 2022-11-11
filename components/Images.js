@@ -1,3 +1,4 @@
+//A list of images to pull from.
 export const CrapFacials = {
   crapBase: {
     imgName: "crapBase",

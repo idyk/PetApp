@@ -10,68 +10,92 @@ import {
   Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrapFacials } from "./ImageExport.js";
-import { NavigationContainer, useIsFocused } from "@react-navigation/native";
+import { CrapFacials } from "./Images.js";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
 
+//This was messy to work with, therefore it's most likely unoptimized.
+//The Pet is the base of the game, where it is to be clicked upon, and then
+//be able to save/load upon every click, while also updating the HUD.
 function Pet(props) {
   const [getEyeIndex, setGetEyeIndex] = useState("Sad");
   const [getMouthIndex, setGetMouthIndex] = useState("Sad");
   const [getCoins, setCoins] = useState(1);
   const [getFullness, setFullness] = useState(100);
+
+  //We want this to only run once on load, because otherwise it will
+  //keep pulling old values that don't even exist in storage.
   useEffect(() => {
     getCoinFunction();
     getFullnessFunction();
   }, []);
 
   useEffect(() => {
-    getValueFunction();
+    getFaceFunction();
   });
 
-  const getValueFunction = () => {
+  //Getting the facial features from storage.
+  const getFaceFunction = () => {
     try {
       AsyncStorage.getItem("eyeIndex").then((eyeInputValue) =>
         setGetEyeIndex(eyeInputValue)
       );
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
     try {
       AsyncStorage.getItem("mouthIndex").then((mouthInputValue) =>
         setGetMouthIndex(mouthInputValue)
       );
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
+  //Getting the coin amount from storage.
   const getCoinFunction = async () => {
     try {
       const awaitSync = await AsyncStorage.getItem("coins");
       const value = parseInt(awaitSync);
       value ? setCoins(value) : setCoins(0);
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
+  //Getting the fullness amount from storage.
   const getFullnessFunction = async () => {
     try {
       const awaitFull = await AsyncStorage.getItem("fullness");
       const valueFull = parseFloat(awaitFull);
       valueFull ? setFullness(valueFull) : setFullness(100);
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
-  const saveValueFunction = async () => {
+  //Saving the game values "fullness" and "coins" to storage. This also checks whether the user
+  //loses or not, and also determines how fullness functions.
+  const saveGameValuesFunction = async () => {
     if (true) {
+      {
+        /* Working around the props by using it, and then adding to it with another variable. */
+      }
       let newVal = props.getCoins + 1;
+
+      {
+        /* Determines the fullness decrease per tap. */
+      }
       let fullVal = Math.floor(
-        props.getFullness - Math.floor(Math.random() * 2)
+        props.getFullness - Math.floor(Math.random() * 3)
       );
       console.log("fullVal: " + fullVal);
       if (newVal.toString() == "NaN") {
         newVal = 1;
+      }
+      {
+        /*The lose condition.*/
       }
       if (fullVal <= 0) {
         alert("You lose! Resetting coins and fullness.");
@@ -86,6 +110,7 @@ function Pet(props) {
     }
   };
 
+  //Sets the Pet's eyes as per chosen in Customize.
   let imgSource = null;
   if (getEyeIndex == "Angry") {
     imgSource = CrapFacials.eyesAngry.uri;
@@ -95,6 +120,7 @@ function Pet(props) {
     imgSource = CrapFacials.eyesSad.uri;
   }
 
+  //Sets the Pet's mouth as per chosen in Customize.
   let imgSourceMouth = null;
   if (getMouthIndex == "Happy") {
     imgSourceMouth = CrapFacials.mouthHappy.uri;
@@ -105,9 +131,11 @@ function Pet(props) {
   }
 
   return (
+    //Every time you pet the Pet, it will have to save and get to update
+    //the HUD to be in line with what the user is doing.
     <TouchableOpacity
       onPress={() => {
-        saveValueFunction();
+        saveGameValuesFunction();
         props.reGet();
         props.reGetFullness();
         props.reSaveFullness();
