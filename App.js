@@ -5,7 +5,7 @@ import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import HUD from "./components/HUD.js";
 import Pet from "./components/Pet.js";
 import Customize from "./components/Customize.js";
-import Settings from "./components/About.js";
+import About from "./components/About.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Define our navigation stack.
@@ -21,7 +21,7 @@ export default function App() {
           name="Customize Your Crap"
           component={CustomizeScreen}
         />
-        <navStack.Screen name="About Page" component={SettingsScreen} />
+        <navStack.Screen name="About Page" component={AboutScreen} />
       </navStack.Navigator>
     </NavigationContainer>
   );
@@ -37,10 +37,10 @@ function CustomizeScreen() {
 }
 
 //Return for the setting screen.
-function SettingsScreen() {
+function AboutScreen() {
   return (
     <View>
-      <Settings />
+      <About />
     </View>
   );
 }
