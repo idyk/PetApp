@@ -88,7 +88,7 @@ function Pet(props) {
         /* Determines the fullness decrease per tap. */
       }
       let fullVal = Math.floor(
-        props.getFullness - Math.floor(Math.random() * 3)
+        props.getFullness - Math.floor(Math.random() * 2)
       );
       console.log("fullVal: " + fullVal);
       if (newVal.toString() == "NaN") {
