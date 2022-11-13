@@ -27,7 +27,7 @@ function Pet(props) {
   //We want this to only run once on load, because otherwise it will
   //keep pulling old values that don't even exist in storage.
   useEffect(() => {
-    getCoinFunction();
+    getCoinsFunction();
     getFullnessFunction();
   }, []);
 
@@ -54,10 +54,10 @@ function Pet(props) {
   };
 
   //Getting the coin amount from storage.
-  const getCoinFunction = async () => {
+  const getCoinsFunction = async () => {
     try {
-      const awaitSync = await AsyncStorage.getItem("coins");
-      const value = parseInt(awaitSync);
+      const awaitCoins = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitCoins);
       value ? setCoins(value) : setCoins(0);
     } catch (e) {
       console.log(e);
@@ -80,7 +80,7 @@ function Pet(props) {
   const saveGameValuesFunction = async () => {
     if (true) {
       {
-        /* Working around the props by using it, and then adding to it with another variable. */
+        /* Working with the props by using it, and then adding to it with another variable. */
       }
       let newVal = props.getCoins + 1;
 

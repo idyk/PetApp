@@ -63,8 +63,8 @@ function StartScreen({ navigation }) {
   //Async storage and uses setCoins to set the value.
   const getCoinsFunction = async () => {
     try {
-      const awaitSync = await AsyncStorage.getItem("coins");
-      const value = parseInt(awaitSync);
+      const awaitCoins = await AsyncStorage.getItem("coins");
+      const value = parseInt(awaitCoins);
       if (value.toString() == "NaN") {
         setCoins(0);
       } else {
