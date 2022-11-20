@@ -19,16 +19,21 @@ import { Audio } from "expo-av";
 const Splash = () => {
   const navigation = useNavigation();
 
-  const backgroundMusic = new Audio.Sound();
+  let backgroundMusic;
 
-  backgroundMusic.loadAsync(require("../assets/sound/test2.wav"));
+  try {
+    backgroundMusic = new Audio.Sound();
+    backgroundMusic.loadAsync(require("../assets/sound/thisSongIsSoGood.wav"));
+  } catch (e) {
+    console.log("BGM Error 1: " + e);
+  }
 
   function playSound() {
     try {
       backgroundMusic.playAsync();
       backgroundMusic.setIsLoopingAsync(true);
     } catch (e) {
-      console.log(e);
+      console.log("BGM Error 2: " + e);
     }
   }
 
@@ -55,16 +60,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
     fontWeight: "600",
+    paddingTop: 250,
   },
   startButton: {
-    flex: 1,
     backgroundColor: "#DAF7A6",
-    width: "auto",
-    height: "auto",
-    borderRadius: 5,
-    margin: 5,
-    padding: 5,
+    width: 200,
+    height: 150,
+    borderRadius: 25,
+    margin: 25,
     fontSize: 25,
+    textAlign: "center",
+    paddingTop: 55,
   },
 });
 
