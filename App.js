@@ -1,11 +1,16 @@
 import React, { props, useEffect, useState } from "react";
-import { NavigationContainer, useIsFocused } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationContainer,
+  useIsFocused,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import HUD from "./components/HUD.js";
 import Pet from "./components/Pet.js";
 import Customize from "./components/Customize.js";
 import About from "./components/About.js";
+import Splash from "./components/Splash.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Define our navigation stack.
@@ -16,7 +21,23 @@ export default function App() {
   return (
     <NavigationContainer>
       <navStack.Navigator>
-        <navStack.Screen name="Your Crap's Home" component={StartScreen} />
+        <navStack.Screen
+          name="Splash Screen"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+        />
+        <navStack.Screen
+          name="Your Crap's Home"
+          component={StartScreen}
+          options={{
+            gestureEnabled: false,
+            headerShown: true,
+            headerLeft: () => <></>,
+          }}
+        />
         <navStack.Screen
           name="Customize Your Crap"
           component={CustomizeScreen}
@@ -24,6 +45,14 @@ export default function App() {
         <navStack.Screen name="About Page" component={AboutScreen} />
       </navStack.Navigator>
     </NavigationContainer>
+  );
+}
+
+function SplashScreen() {
+  return (
+    <View>
+      <Splash />
+    </View>
   );
 }
 
