@@ -18,9 +18,8 @@ const Settings = () => {
           <Text style={styles.bold}>GOAL:</Text> The goal of this game is to
           keep your pet Crap from starving! {"\n"}
           <Text style={styles.bold}>HOW TO PLAY:</Text> Keep tapping the Crap!
-          (you do NOT need to wash your hands after!) As you tap (or pet your
-          Crap), your Crap's hunger might deplete. It's stressful to be Crap!{" "}
-          {"\n"}
+          As you tap (or pet your Crap), your Crap's hunger might deplete. It's
+          stressful to be Crap! {"\n"}
           If the <Text style={styles.bold}>FULLNESS</Text> amount reaches 0, you
           lose! {"\n"}To fight the hunger, you can{" "}
           <Text style={styles.bold}>FEED</Text> your Crap using{" "}
