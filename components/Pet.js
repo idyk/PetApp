@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrapFacials } from "./Images.js";
+import { Audio } from "expo-av";
 
 // Stack all needed pet elements on each other using zIndex.
 // You can also pet your crap for money.
@@ -34,6 +35,19 @@ function Pet(props) {
   useEffect(() => {
     getFaceFunction();
   });
+
+  //Define the tap sound audio for when the pet is tapped.
+  const tapSound = new Audio.Sound();
+
+  tapSound.loadAsync(require("../assets/sound/test.wav"));
+
+  function playSound() {
+    try {
+      tapSound.playAsync();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   //Getting the facial features from storage.
   const getFaceFunction = () => {
@@ -141,6 +155,7 @@ function Pet(props) {
     //the HUD to be in line with what the user is doing.
     <TouchableOpacity
       onPress={() => {
+        playSound();
         saveGameValuesFunction();
         props.reGet();
         props.reGetFullness();
