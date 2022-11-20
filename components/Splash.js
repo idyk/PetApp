@@ -26,6 +26,7 @@ const Splash = () => {
   function playSound() {
     try {
       backgroundMusic.playAsync();
+      backgroundMusic.setIsLoopingAsync(true);
     } catch (e) {
       console.log(e);
     }

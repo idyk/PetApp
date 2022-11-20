@@ -12,6 +12,7 @@ import Customize from "./components/Customize.js";
 import About from "./components/About.js";
 import Splash from "./components/Splash.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useBackHandler } from "@react-native-community/hooks";
 
 //Define our navigation stack.
 const navStack = createNativeStackNavigator();
@@ -82,10 +83,21 @@ function StartScreen({ navigation }) {
   const [getCoins, setCoins] = useState(0);
   const [getFullness, setFullness] = useState(100);
 
+  //By picking a screen that isn't within the Start Screen, we can make the back button not let
+  //the user go back to the splash screen! What a strange prevention method...
+  const goNowhere = () => {
+    navigation.navigate("Customize Your Crap");
+  };
+
   //Run these every time the screen has any change.
   useEffect(() => {
     getCoinsFunction();
     getFullnessFunction();
+  });
+
+  useBackHandler(() => {
+    console.log("BACK");
+    goNowhere();
   });
 
   //Obtaining the coins from storage function. It looks for it in the
