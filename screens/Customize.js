@@ -13,7 +13,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Used for any facial images in the app.
-import { CrapFacials } from "./Images.js";
+import { CrapFacials } from "../components/Images.js";
 
 function Customize() {
   const [eyeInputValue, setEyeInputValue] = useState("Sad");

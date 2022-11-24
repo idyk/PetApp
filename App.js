@@ -7,10 +7,10 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import HUD from "./components/HUD.js";
-import Pet from "./components/Pet.js";
-import Customize from "./components/Customize.js";
-import About from "./components/About.js";
-import Splash from "./components/Splash.js";
+import Pet from "./screens/Pet.js";
+import Customize from "./screens/Customize.js";
+import About from "./screens/About.js";
+import Splash from "./screens/Splash.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useBackHandler } from "@react-native-community/hooks";
 

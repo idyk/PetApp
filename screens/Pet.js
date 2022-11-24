@@ -10,7 +10,7 @@ import {
   Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrapFacials } from "./Images.js";
+import { CrapFacials } from "../components/Images.js";
 import { Audio } from "expo-av";
 
 // Stack all needed pet elements on each other using zIndex.
